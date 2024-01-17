@@ -1,5 +1,11 @@
 import { describe, expect, test } from "@jest/globals";
-import { capitalize, reverseString, calculator, analyzeArray } from "../main";
+import {
+  capitalize,
+  reverseString,
+  calculator,
+  analyzeArray,
+  ceasarCypher,
+} from "../main";
 
 describe("Tests the capitalize function", () => {
   test("Capitalize hello to Hello", () => {
@@ -75,5 +81,32 @@ describe("test analyzeArray", () => {
   test("test error on wrong input", () => {
     expect(() => analyzeArray(["w", 1, 2, 3, 3])).toThrow();
     expect(() => analyzeArray(123)).toThrow();
+  });
+});
+
+describe("testing ceasarCypher", () => {
+  test("works for basic case", () => {
+    expect(ceasarCypher("hello", 1)).toBe("ifmmp");
+    expect(ceasarCypher("world", 2)).toBe("yqtnf");
+    expect(ceasarCypher("abcd", 15)).toBe("pqrs");
+  });
+  test("maitains case", () => {
+    expect(ceasarCypher("Hello", 1)).toBe("Ifmmp");
+    expect(ceasarCypher("worlD", 2)).toBe("yqtnF");
+    expect(ceasarCypher("ABCD", 15)).toBe("PQRS");
+  });
+  test("maintains punctuation", () => {
+    expect(ceasarCypher("hel lo", 1)).toBe("ifm mp");
+    expect(ceasarCypher("_world_", 2)).toBe("_yqtnf_");
+    expect(ceasarCypher('a-b,c.d"', 15)).toBe('p-q,r.s"');
+  });
+  test("word wrap works", () => {
+    expect(ceasarCypher("hello", 26)).toBe("hello");
+    expect(ceasarCypher("world", 28)).toBe("yqtnf");
+    expect(ceasarCypher("abcd", 41)).toBe("pqrs");
+  });
+  test("throws error on wrong input type", () => {
+    expect(() => ceasarCypher(12, 12)).toThrow();
+    expect(() => ceasarCypher("hello", "0")).toThrow();
   });
 });

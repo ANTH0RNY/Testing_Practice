@@ -19,6 +19,9 @@ function reverseString(string) {
   return string.split("").reverse().join("");
 }
 
+/*
+ *Starting calculator
+ * */
 function add(a, b) {
   testType(a, "number");
   testType(b, "number");
@@ -61,4 +64,57 @@ function analyzeArray(array) {
   return { length, average, max, min };
 }
 
-export { capitalize, reverseString, calculator, analyzeArray };
+/*
+ * starting ceasars function
+ * */
+
+function ceasarCypher(string, shift = 0) {
+  testType(string, "string");
+  testType(shift, "number");
+  const alphabet = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+  ];
+  let outputString = "";
+  const alphaNumericRegex = /^[a-zA-Z]+$/;
+  const upperCaseRegex = /[A-Z]/;
+  for (let i of string) {
+    if (!alphaNumericRegex.test(i)) {
+      outputString += i;
+      continue;
+    }
+    const index = alphabet.indexOf(i.toLowerCase());
+    const cypherChar = alphabet[(index + shift) % alphabet.length];
+    if (upperCaseRegex.test(i)) {
+      outputString += cypherChar.toUpperCase();
+      continue;
+    }
+    outputString += cypherChar;
+  }
+  return outputString;
+}
+export { capitalize, reverseString, calculator, analyzeArray, ceasarCypher };
